@@ -1,0 +1,155 @@
+# ==========================================
+# Infrastructure Settings (Minimal for Debug)
+# ==========================================
+ref_num_nodes: 1
+ref_num_gpus_per_node: 1
+critic_num_nodes: 1
+critic_num_gpus_per_node: 1
+actor_num_nodes: 1
+actor_num_gpus_per_node: 1
+reward_num_nodes: 1
+reward_num_gpus_per_node: 1
+
+# ==========================================
+# Batch Size Configuration
+# ==========================================
+micro_train_batch_size: 8
+micro_rollout_batch_size: 8
+train_batch_size: 64
+rollout_batch_size: 8
+micro_reward_batch_size: 8
+
+# ==========================================
+# Data Sampling Configuration
+# ==========================================
+max_samples: -1
+eval_max_samples: 128
+eval_down_max_samples: 128
+max_epochs: 1
+num_episodes: 1 # overridden in `sweep`
+
+# ==========================================
+# Dataset Paths
+# ==========================================
+prompt_data: sjelassi/swallow_code_20m
+eval_dataset: sjelassi/swallow_code_20m
+input_key: question
+label_key: answer
+output_key: answer
+prompt_split: train
+eval_split: test
+prompt_max_len: 1024
+
+# ==========================================
+# Logging and Checkpointing
+# ==========================================
+wandb_project: <INSERT>
+use_wandb: <INSERT>
+save_steps: -1
+logging_steps: 1
+save_log_scale_count: 10
+save_path: ./ebft_checkpoints_code_unstructured
+log_gradients: false
+
+# ==========================================
+# Training Configuration
+# ==========================================
+no_chat_template: true
+colocate_all_models: false
+colocate_reward_models: false
+disable_ds_ckpt: true
+pretrain_mode: true
+debug: false
+
+# ==========================================
+# Loss Coefficients
+# ==========================================
+use_kl_loss: true
+kl_estimator: k2
+
+# ==========================================
+# Generation Parameters
+# ==========================================
+stride: 8
+context_max_len: 8
+generate_max_len: 8
+n_samples_per_prompt: 4
+top_p: 1.0
+
+# ==========================================
+# Evaluation Configuration
+# ==========================================
+eval_generate_max_len: 512
+eval_temperature: ${temperature}
+eval_n_samples_per_prompt: ${n_samples_per_prompt}
+eval_batch_size: 16
+eval_down_batch_size: 128
+eval_n_samples_per_prompt_down: 4
+eval_temperature_down: 0.6
+eval_steps: 100
+eval_down_steps: 50
+
+# ==========================================
+# Model Configuration
+# ==========================================
+# Set under `sweep` below
+# pretrain: meta-llama/Llama-3.2-1B
+# critic_pretrain: meta-llama/Llama-3.2-1B
+zero_stage: 2
+
+# ==========================================
+# RL Algorithm
+# ==========================================
+advantage_estimator: 'rloo'
+init_kl_coef: 0.0
+temperature: 0.6
+seed: 43
+enable_ema: true 
+ema_beta: 0.9
+
+critic_lr_scheduler: "constant_with_warmup"
+lr_scheduler: "constant_with_warmup"
+
+use_whitening: true
+critic_classifier_loss_coef: 0.0
+
+ce_loss_coef: 0.0
+rl_loss_coef: 1.0
+
+diversity_rew_coef: 1.0
+alignment_rew_coef: 1.0
+
+hidden_state_method: "concat"
+embed_method: "last_token"
+critic_sequence_level: "last_token"
+classifier_sequence_selection: "closest"
+
+critic_learning_rate: 0.0
+critic_lr_head: 0.0
+lr_warmup_ratio: 0.03
+
+document_masking: false
+qa_masking: false
+
+# ==========================================
+# Sweep Configurations
+# ==========================================
+sweep:
+  # Set 1: 2 epoch EBFT from base, sweeping over CE loss and diversity reward coefficients, with and without whitening
+  - actor_learning_rate: [1e-6]
+    use_whitening: [true, false]
+    pretrain: ["Qwen/Qwen2.5-1.5B"] 
+    critic_pretrain: ["Qwen/Qwen2.5-1.5B"] 
+    ce_loss_coef: [0.0, 0.03, 0.1]
+    rl_loss_coef: [1.0]
+    diversity_rew_coef: [0.0, 0.5, 1.0]
+    num_episodes: [2]
+  # Set 2: 1 epoch EBFT from warmstart, sweeping over CE loss and diversity reward coefficients
+  - actor_learning_rate: [1e-6]
+    use_whitening: [true]
+    pretrain: ["rosieyzh/sft_qwen15_swallow20_lr_1e-5_cosine_1_epochs_ckpt_1_of_1"] 
+    critic_pretrain: ["Qwen/Qwen2.5-1.5B"]
+    ce_loss_coef: [0.0, 0.03, 0.1]
+    rl_loss_coef: [1.0]
+    diversity_rew_coef: [0.0, 0.5, 1.0]
+    num_episodes: [1]

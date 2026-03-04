@@ -1,0 +1,35 @@
+accelerate
+autopep8
+black
+bitsandbytes
+datasets
+# deepspeed==0.17.4
+deepspeed
+einops
+# flash-attn==2.8.2
+flash-attn
+# grpcio>=1.74.0
+grpcio
+isort
+jsonlines
+loralib
+optimum
+# optree>=0.13.0
+optree
+packaging
+peft
+# pynvml>=12.0.0
+pynvml
+ray[default]==2.48.0
+tensorboard
+torch
+torchdata
+torchmetrics
+tqdm
+# transformers==4.54.1
+transformers
+transformers_stream_generator
+matplotlib
+pyyaml
+wandb
+wheel
