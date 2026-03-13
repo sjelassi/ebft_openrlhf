@@ -1,6 +1,6 @@
 # Matching Features, Not Tokens: Energy-Based Fine-Tuning of Language Models
 
-Accompanying code for experiments in "Matching Features, Not Tokens: Energy-Based Fine-Tuning of Language Models". We are grateful to the contributors of [OpenRLHF](https://github.com/OpenRLHF/OpenRLHF), from which this code is built on top of.
+Accompanying code for experiments in "[Matching Features, Not Tokens: Energy-Based Fine-Tuning of Language Models](https://arxiv.org/abs/2603.12248)". We are grateful to the contributors of [OpenRLHF](https://github.com/OpenRLHF/OpenRLHF), from which this code is built on top of.
 
 ## Setup
 The code is up-to-date with OpenRLHF 0.8.9. Run the setup script which creates a conda environment with necessary dependencies:
@@ -79,10 +79,13 @@ In our paper we exclusively use a **frozen critic** (the critic model's weights 
 
 ## Citation
 ```bibtex
-@article{zhao2025echo,
-  title={Matching Features, Not Tokens: Energy-Based Fine-Tuning of Language Models},
-  author={Jelassi, Samy and Kwun, Mujin and Zhao, Rosie and Li, Yuanzhi and Fusi, Nicolo and Du, Yilun and Kakade, Sham and Domingo-Enrich, Carles},
-  journal={arXiv preprint arXiv:TBD},
-  year={2027}
+@misc{jelassi2026matchingfeaturestokensenergybased,
+      title={Matching Features, Not Tokens: Energy-Based Fine-Tuning of Language Models}, 
+      author={Samy Jelassi and Mujin Kwun and Rosie Zhao and Yuanzhi Li and Nicolo Fusi and Yilun Du and Sham M. Kakade and Carles Domingo-Enrich},
+      year={2026},
+      eprint={2603.12248},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2603.12248}, 
 }
 ```
