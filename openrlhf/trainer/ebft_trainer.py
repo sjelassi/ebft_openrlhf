@@ -22,7 +22,6 @@ from openrlhf.trainer.ray.launcher import RayActorGroup
 from openrlhf.utils.deepspeed import DeepspeedStrategy
 from openrlhf.utils.logging_utils import init_logger
 from openrlhf.utils.utils import get_tokenizer
-from datatrove.utils.dataset import DatatroveFolderDataset
 from openrlhf.utils.embedding_utils import (
     whiten_embeddings_batched,
     get_alignment_rewards,
