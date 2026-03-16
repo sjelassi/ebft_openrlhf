@@ -16,7 +16,7 @@ reward_num_gpus_per_node: 1
 micro_train_batch_size: 8
 micro_rollout_batch_size: 8
 train_batch_size: 64
-rollout_batch_size: 8
+rollout_batch_size: 16
 micro_reward_batch_size: 8
 
 # ==========================================
