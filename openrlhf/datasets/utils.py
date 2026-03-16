@@ -1,7 +1,6 @@
 import os
 
 from datasets import interleave_datasets, load_dataset, load_from_disk
-from datatrove.utils.dataset import DatatroveFolderDataset
 
 
 def exist_and_not_none(d, key):
